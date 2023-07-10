@@ -421,13 +421,19 @@ if (NOT (UNIX AND onnxruntime_USE_CUDA AND onnxruntime_ENABLE_PYTHON AND onnxrun
 endif()
 
 set(onnxruntime_REQUIRE_PYTHON_EMBED_LIB OFF)
-if (onnxruntime_ENABLE_TRAINING_TORCH_INTEROP OR onnxruntime_ENABLE_TRITON)
-  if (onnxruntime_ENABLE_TRAINING_TORCH_INTEROP)
-    add_compile_definitions(ENABLE_TRAINING_TORCH_INTEROP)
+if (onnxruntime_ENABLE_TRAINING_TORCH_INTEROP)
+  add_compile_definitions(ENABLE_TRAINING_TORCH_INTEROP)
+
+  # Python::Python is required for building unit test executables.
+  if (onnxruntime_BUILD_UNIT_TESTS)
+    set(onnxruntime_REQUIRE_PYTHON_EMBED_LIB ON)
   endif()
-  if (onnxruntime_ENABLE_TRITON)
-    add_compile_definitions(ENABLE_TRITON)
-  endif()
+endif()
+
+if (onnxruntime_ENABLE_TRITON)
+  # Need SetOutputMLValue.
+  set(onnxruntime_ENABLE_ATEN ON)
+  add_compile_definitions(ENABLE_TRITON)
 
   # Python::Python is required for building unit test executables.
   if (onnxruntime_BUILD_UNIT_TESTS)

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#ifdef ENABLE_TRITON
-
 #include "orttraining/training_ops/cpu/triton/triton_op.h"
 
 #ifndef SHARED_PROVIDER
@@ -70,5 +68,3 @@ Status ExecuteTritonOpByFuncName(OpKernelContext* p_ctx, const std::string& func
 
 }  // namespace contrib
 }  // namespace onnxruntime
-
-#endif  // ENABLE_TRITON

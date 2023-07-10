@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if ENABLE_TRITON
-
 #pragma once
 
 #ifndef SHARED_PROVIDER
@@ -37,5 +35,3 @@ Status ExecuteTritonOpByFuncName(OpKernelContext* p_ctx, const std::string& func
 
 }  // namespace contrib
 }  // namespace onnxruntime
-
-#endif  // ENABLE_TRITON

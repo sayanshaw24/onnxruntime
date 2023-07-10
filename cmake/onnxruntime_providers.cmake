@@ -204,8 +204,6 @@ if (onnxruntime_ENABLE_TRAINING_OPS AND NOT onnxruntime_ENABLE_TRAINING)
     "${ORTTRAINING_SOURCE_DIR}/training_ops/cpu/tensorboard/*.h"
     "${ORTTRAINING_SOURCE_DIR}/training_ops/cpu/torch/*.cc"
     "${ORTTRAINING_SOURCE_DIR}/training_ops/cpu/torch/*.h"
-    "${ORTTRAINING_SOURCE_DIR}/training_ops/cpu/triton/triton_op.cc"
-    "${ORTTRAINING_SOURCE_DIR}/training_ops/cpu/triton/triton_op.h"
   )
 
   list(REMOVE_ITEM onnxruntime_providers_src ${onnxruntime_cpu_full_training_only_srcs})
@@ -243,6 +241,13 @@ if (onnxruntime_ENABLE_TRAINING)
 
   source_group(TREE ${ORTTRAINING_ROOT}/ FILES ${onnxruntime_cpu_training_ops_srcs})
   list(APPEND onnxruntime_providers_src ${onnxruntime_cpu_training_ops_srcs})
+endif()
+
+if (NOT onnxruntime_ENABLE_TRITON)
+  list(REMOVE_ITEM onnxruntime_providers_src
+    "${ORTTRAINING_SOURCE_DIR}/training_ops/cpu/triton/triton_op.cc"
+    "${ORTTRAINING_SOURCE_DIR}/training_ops/cpu/triton/triton_op.h"
+  )
 endif()
 
 if (onnxruntime_REDUCED_OPS_BUILD)
@@ -439,7 +444,6 @@ if (onnxruntime_USE_CUDA)
         "${ORTTRAINING_SOURCE_DIR}/training_ops/cuda/gist/*.cu"
         "${ORTTRAINING_SOURCE_DIR}/training_ops/cuda/torch/*.cc"
         "${ORTTRAINING_SOURCE_DIR}/training_ops/cuda/torch/*.h"
-        "${ORTTRAINING_SOURCE_DIR}/training_ops/cuda/triton/triton_op.cc"
       )
 
       list(REMOVE_ITEM onnxruntime_providers_cuda_src ${onnxruntime_cuda_full_training_only_srcs})
@@ -452,6 +456,12 @@ if (onnxruntime_USE_CUDA)
       )
 
       list(REMOVE_ITEM onnxruntime_providers_cuda_src ${onnxruntime_cuda_nccl_op_srcs})
+    endif()
+
+    if (NOT onnxruntime_ENABLE_TRITON)
+      list(REMOVE_ITEM onnxruntime_providers_cuda_src
+        "${ORTTRAINING_SOURCE_DIR}/training_ops/cuda/triton/triton_op.cc"
+      )
     endif()
   endif()
 
