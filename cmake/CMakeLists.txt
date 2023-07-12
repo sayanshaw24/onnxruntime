@@ -415,7 +415,7 @@ endif()
 
 if (NOT (UNIX AND onnxruntime_USE_CUDA AND onnxruntime_ENABLE_PYTHON AND onnxruntime_ENABLE_TRAINING AND (NOT onnxruntime_BUILD_SHARED_LIB)))
   if (onnxruntime_ENABLE_TRITON)
-    message(WARNING "onnxruntime_ENABLE_TRITON is turned OFF due to incompatible build combinations.")
+    message(WARNING "onnxruntime_ENABLE_TRITON is turned OFF because it's designed to support CUDA training on Linux only currently.")
   endif()
   set(onnxruntime_ENABLE_TRITON OFF)
 endif()
